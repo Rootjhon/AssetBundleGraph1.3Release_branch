@@ -148,6 +148,11 @@ namespace UnityEngine.AssetBundles.GraphTool {
 			t = AssetDatabase.GetMainAssetTypeAtPath(assetPath);
             if(t == typeof(MonoBehaviour)) {
                 UnityEngine.Object asset = AssetDatabase.LoadMainAssetAtPath(assetPath);
+                if (null == asset)
+                {
+                    Debug.LogError("GetTypeOfAsset LoadMainAssetAtPath assetPath : " + assetPath);
+                    return t;
+                }
                 t = asset.GetType();
                 //Resources.UnloadAsset(asset);
             }
