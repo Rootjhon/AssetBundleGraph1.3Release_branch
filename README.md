@@ -1,6 +1,8 @@
 # AssetBundleGraph1.3Release_branch
 Unity AssetBundleGraph1.3Release_branch 
 
+require Unity 5.5 or later
+
 
 ![SS](/Doc/images/readme/graph.png)
 
