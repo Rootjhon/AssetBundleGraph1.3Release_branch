@@ -833,15 +833,11 @@ namespace UnityEngine.AssetBundles.GraphTool {
 				}
 
 				using(new EditorGUI.DisabledScope(controller.IsAnyIssueFound)) {
-					performBuild = GUILayout.Button("Build", EditorStyles.toolbarButton, GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT));
-				}
-			}
-
-			// Workaround:
-			// Calling time taking procedure such as asset bundle build inside Scope object 
-			// may throw Exception becuase object state is already invalid by the time to Dispose.
-			if(performBuild) {
-				EditorApplication.ExecuteMenuItem(Model.Settings.GUI_TEXT_MENU_BUILD);
+                    if (GUILayout.Button("Build", EditorStyles.toolbarButton, GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT)))
+                    {
+                        EditorApplication.delayCall += BuildFromMenu;
+                    }
+                }
 			}
 		}
 
