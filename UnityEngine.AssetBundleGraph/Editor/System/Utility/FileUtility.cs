@@ -6,17 +6,18 @@ using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 
-using Model=UnityEngine.AssetBundles.GraphTool.DataModel.Version2;
+using Model = UnityEngine.AssetBundles.GraphTool.DataModel.Version2;
+using System.Threading;
 
 namespace UnityEngine.AssetBundles.GraphTool {
 	public class FileUtility {
 		public static void RemakeDirectory (string localFolderPath) {
 			if (Directory.Exists(localFolderPath)) {
-				Directory.Delete(localFolderPath, true);
+                FileUtility.DeleteDirectory(localFolderPath, true);
 			}
 			Directory.CreateDirectory(localFolderPath);
 		}
-
+        
 		public static void CopyFile (string sourceFilePath, string targetFilePath) {
 			var parentDirectoryPath = Path.GetDirectoryName(targetFilePath);
 			Directory.CreateDirectory(parentDirectoryPath);
@@ -41,7 +42,7 @@ namespace UnityEngine.AssetBundles.GraphTool {
 			var directoryPath = Directory.GetParent(localTargetFilePath).FullName;
 			var restFiles = GetFilePathsInFolder(directoryPath);
 			if (!restFiles.Any()) {
-				Directory.Delete(directoryPath, true);
+                FileUtility.DeleteDirectory(directoryPath, true);
 				File.Delete(directoryPath + Model.Settings.UNITY_METAFILE_EXTENSION);
 			}
 		}
@@ -218,5 +219,21 @@ namespace UnityEngine.AssetBundles.GraphTool {
 			#endif
 			return null;
 		}
+        public static void DeleteDirectory(string varDirePath,bool varRecursive)
+        {
+            string[] tempDirs = Directory.GetDirectories(varDirePath);
+            string[] tempFiles = Directory.GetFiles(varDirePath);
+            foreach (var tempDir in tempDirs)
+            {
+                File.SetAttributes(tempDir, FileAttributes.Normal);
+            }
+            foreach (var tempFile in tempFiles)
+            {
+                File.SetAttributes(tempFile, FileAttributes.Normal);
+                File.Delete(tempFile);
+            }
+            File.SetAttributes(varDirePath, FileAttributes.Normal);
+            Directory.Delete(varDirePath, varRecursive);
+        }
 	}
 }
