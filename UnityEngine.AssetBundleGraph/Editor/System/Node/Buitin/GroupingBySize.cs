@@ -100,15 +100,9 @@ namespace UnityEngine.AssetBundles.GraphTool
 
 					var newSizeText = EditorGUILayout.TextField("Size(KB)",m_groupSizeByte[editor.CurrentEditingGroup].ToString());
 					int newSize = 0;
+                    Int32.TryParse(newSizeText, out newSize);
 
-					if( !Int32.TryParse(newSizeText, out newSize) ) {
-						throw new NodeException("Invalid size. Size property must be in decimal format.", node.Id);
-					}
-					if(newSize < 0) {
-						throw new NodeException("Invalid size. Size property must be a positive number.", node.Id);
-					}
-
-					if (newSize != m_groupSizeByte[editor.CurrentEditingGroup]) {
+                    if (newSize != m_groupSizeByte[editor.CurrentEditingGroup]) {
 						using(new RecordUndoScope("Change Grouping Size", node, true)){
 							m_groupSizeByte[editor.CurrentEditingGroup] = newSize;
 							onValueChanged();
