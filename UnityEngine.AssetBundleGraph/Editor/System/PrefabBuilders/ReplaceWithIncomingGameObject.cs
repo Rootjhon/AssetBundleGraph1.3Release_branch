@@ -77,7 +77,9 @@ public class ReplaceWithIncomingGameObject : IPrefabBuilder {
 	 * Draw Inspector GUI for this PrefabBuilder.
 	 */ 
 	public void OnInspectorGUI (Action onValueChanged) {
-        EditorGUILayout.HelpBox("Replace With Incoming GameObject creates prefab by replacing child of assigned Prefab with incoming GameObjects using name.", MessageType.Info);
+
+        EditorGUILayout.HelpBox ("Replace With Incoming GameObject creates prefab by replacing child of assigned Prefab with incoming GameObjects using name.", MessageType.Info);
+
         using (new EditorGUILayout.VerticalScope (GUI.skin.box)) {
 
             var newObj  = (UnityEngine.GameObject)EditorGUILayout.ObjectField(
